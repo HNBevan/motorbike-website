@@ -1101,7 +1101,7 @@ hr.divider {
   font-size: 0.62rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--steel-light);
+  color: var(--mist);
 }
 
 .form-group input,
@@ -1130,7 +1130,7 @@ hr.divider {
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: var(--steel-mid);
+  color: var(--silver);
 }
 
 .form-submit {
@@ -1423,10 +1423,10 @@ hr.divider {
   #navbar, #navbar.scrolled { padding-left: 24px; padding-right: 24px; }
 
   /* Hero */
-  .hero-inner { padding: 0 24px; padding-bottom: 130px; }
+  .hero-inner { padding: 0 24px; padding-bottom: 170px; }
   .hero-scroll-hint { bottom: 28px; }
   .hero-headline { font-size: clamp(2.8rem, 10vw, 5rem); }
-  .hero-bike-side { height: 38vh; min-height: 220px; }
+  .hero-bike-side { height: 38vh; min-height: 220px; margin-top: -70px; }
 
   /* Craft panels */
   .craft-panel-visual { height: 55vw; }
@@ -1451,9 +1451,9 @@ hr.divider {
   #navbar, #navbar.scrolled { padding-left: 20px; padding-right: 20px; }
 
   /* Hero */
-  .hero-inner { padding: 0 20px; padding-bottom: 48px; }
+  .hero-inner { padding: 0 20px; padding-bottom: 100px; }
   .hero-headline { font-size: clamp(2.4rem, 11vw, 3.6rem); }
-  .hero-bike-side { height: 34vh; min-height: 200px; }
+  .hero-bike-side { height: 34vh; min-height: 200px; margin-top: -70px; }
   .hero-eyebrow { font-size: 0.58rem; }
 
   /* Craft */
@@ -1476,11 +1476,144 @@ hr.divider {
   .footer-cols { flex-direction: column; gap: 32px; }
 }
 
-/* PHONE LANDSCAPE (short viewport) */
-@media (max-height: 500px) and (orientation: landscape) {
+/* ══════════════════════════════════════════
+   Z FOLD COVER SCREEN — very narrow portrait (up to 380px)
+══════════════════════════════════════════ */
+@media (max-width: 380px) {
+  .section-wrapper { padding: 0 16px; }
+  #navbar, #navbar.scrolled { padding-left: 16px; padding-right: 16px; }
+  .hero-inner { padding: 0 16px; padding-bottom: 100px; }
+  .hero-headline { font-size: clamp(2rem, 12vw, 3rem); }
+  .hero-eyebrow { font-size: 0.55rem; letter-spacing: 0.28em; }
+  .hero-sub { font-size: 0.82rem; }
+  .craft-panel-title { font-size: clamp(1.6rem, 9vw, 2.2rem); }
+  .craft-panel-content { padding: 36px 5%; }
+  .craft-panel-desc { font-size: 0.84rem; }
+  .models-grid { grid-template-columns: 1fr; }
+  .features-inner { grid-template-columns: 1fr; }
+  .model-body { padding: 20px 20px 24px; }
+  .feature-item { padding: 44px 28px; }
+  .contact-layout { gap: 36px; }
+  .footer-top { gap: 32px; }
+}
+
+/* ══════════════════════════════════════════
+   PHONE LANDSCAPE — portrait phones rotated (height ≤ 600px)
+══════════════════════════════════════════ */
+@media (orientation: landscape) and (max-height: 600px) {
+  :root { --section-pad: 60px; }
+
+  /* Navbar */
+  #navbar, #navbar.scrolled { padding-top: 14px; padding-bottom: 14px; }
+
+  /* Hero — restore side-by-side layout */
   #hero { min-height: 100svh; }
-  .hero-inner { padding-top: 70px; padding-bottom: 40px; align-items: center; }
-  .hero-headline { font-size: clamp(1.8rem, 5vw, 3rem); }
-  .hero-bike-side { height: 80vh; }
-  .craft-panel { height: auto; min-height: 100svh; }
+  .hero-inner {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    padding: 72px 24px 32px;
+    align-items: center;
+    justify-items: start;
+  }
+  .hero-content {
+    text-align: left;
+    padding-right: 24px;
+    padding-left: 0;
+    grid-row: 1;
+    grid-column: 1;
+  }
+  .hero-bike-side {
+    grid-row: 1;
+    grid-column: 2;
+    height: 80svh;
+    margin-top: 0;
+    width: 100%;
+  }
+  #hero-canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; left: 0 !important; }
+  .hero-headline { font-size: clamp(1.6rem, 4.5vw, 2.8rem); }
+  .hero-eyebrow { justify-content: flex-start; }
+  .hero-sub { max-width: 100%; margin: 0; margin-bottom: 28px; font-size: 0.82rem; }
+  .hero-scroll-hint { bottom: 10px; }
+
+  /* Craft panels — 2-column, auto height */
+  .craft-panel {
+    grid-template-columns: 1fr 1fr;
+    height: auto;
+    min-height: 100svh;
+  }
+  .craft-panel-visual { height: 100svh; order: unset; min-height: unset; }
+  .craft-panel-content { padding: 80px 6%; order: unset; }
+  .craft-panel-2 .craft-panel-visual { order: 2; }
+  .craft-panel-2 .craft-panel-content { order: 1; }
+
+  /* Models */
+  .models-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .models-grid .model-card:last-child:nth-child(odd) { grid-column: auto; }
+
+  /* Features */
+  .features-inner { grid-template-columns: repeat(3, 1fr); }
+  .features-inner .feature-item:last-child:nth-child(odd) { grid-column: auto; }
+  .feature-item { padding: 40px 32px; }
+
+  /* Intro */
+  .intro-inner { flex-wrap: nowrap; }
+  .intro-divider { display: block; }
+  .intro-stat { flex: 1; }
+
+  /* Story */
+  .story-layout { grid-template-columns: 1fr 1.2fr; gap: 48px; }
+
+  /* Contact */
+  .contact-layout { grid-template-columns: 1fr 1fr; gap: 48px; }
+}
+
+/* ══════════════════════════════════════════
+   TABLET LANDSCAPE — touch devices in landscape (iPads, Z Fold unfolded, etc.)
+   pointer: coarse = touch screen, excludes laptops/desktops with mice
+══════════════════════════════════════════ */
+@media (orientation: landscape) and (pointer: coarse) and (min-height: 600px) {
+  /* Hero — keep stacked layout, just resize the bike */
+  .hero-bike-side {
+    height: 85vh;
+    min-height: 0 !important;
+    margin-top: -20px;
+  }
+  #hero-canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; left: 0 !important; }
+
+  /* Craft panels — full height 2-column */
+  .craft-panel {
+    grid-template-columns: 1fr 1fr;
+    height: 100svh;
+  }
+  .craft-panel-visual { height: 100svh; order: unset; min-height: unset; }
+  .craft-panel-content { padding: 0 9% 0 11%; order: unset; }
+  .craft-panel-2 .craft-panel-visual { order: 2; }
+  .craft-panel-2 .craft-panel-content { order: 1; padding: 0 11% 0 9%; }
+
+  /* Models */
+  .models-grid { grid-template-columns: repeat(3, 1fr); }
+  .models-grid .model-card:last-child:nth-child(odd) { grid-column: auto; }
+
+  /* Features */
+  .features-inner { grid-template-columns: repeat(3, 1fr); }
+  .features-inner .feature-item:last-child:nth-child(odd) { grid-column: auto; }
+
+  /* Story */
+  .story-layout { grid-template-columns: 1fr 1.2fr; gap: 80px; }
+
+  /* Contact */
+  .contact-layout { grid-template-columns: 1fr 1fr; gap: 80px; }
+
+  /* Intro */
+  .intro-inner { flex-wrap: nowrap; }
+  .intro-divider { display: block; }
+  .intro-stat { flex: 1; }
+}
+
+/* Shorter landscape tablets (e.g. 1024x600) */
+@media (orientation: landscape) and (pointer: coarse) and (min-height: 600px) and (max-height: 680px) {
+  .hero-bike-side {
+    height: 55vh;
+    min-height: 0 !important;
+  }
 }
