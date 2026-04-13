@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"C:\\\\Users\\\\haile\\\\OneDrive\\\\Desktop\\\\High End Webpage\")",
+      "Read(//c/Users/haile/.claude/projects/c--Users-haile-OneDrive-Desktop-High-End-Webpage/**)",
+      "Read(//c/Users/haile/.claude/projects/c--Users-haile-OneDrive-Desktop-High-End-Webpage\" 2>/dev/**)",
+      "Bash(grep -v \"//.*wire\\\\|BP_\\\\|function wire\")"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\haile\\OneDrive\\Desktop"
+    ]
+  }
+}
