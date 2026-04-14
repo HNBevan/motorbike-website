@@ -1712,6 +1712,12 @@ hr.divider {
     height: 100%;
     object-fit: cover;
   }
+  /* Exhaust image — anchor to the left edge */
+  .craft-panel-1 .craft-panel-img {
+    object-position: 0% center;
+    transform: scale(1.2) translateX(-8%);
+    transform-origin: left center;
+  }
   .craft-panel-content { padding: 0 6% 0 8%; order: unset; }
   .craft-panel-2 .craft-panel-visual { order: 2; }
   .craft-panel-2 .craft-panel-content { order: 1; padding: 0 8% 0 6%; }
