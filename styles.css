@@ -1660,7 +1660,7 @@ hr.divider {
 /* ══════════════════════════════════════════
    Z FOLD OPEN — portrait inner display ~656×728 px
 ══════════════════════════════════════════ */
-@media (min-width: 630px) and (max-width: 680px) and (orientation: portrait) {
+@media (min-width: 630px) and (max-width: 680px) and (min-height: 700px) {
 
   /* Hero — side-by-side, same as landscape */
   .hero-inner {
@@ -1697,9 +1697,9 @@ hr.divider {
     height: 100svh;
   }
   .craft-panel-visual {
-    height: 100svh;
+    height: 100svh !important;
     order: unset;
-    min-height: unset;
+    min-height: 0 !important;
     align-self: stretch;
   }
   .craft-panel-visual::after { box-shadow: inset 0 0 60px 20px rgba(10,10,14,0.75); }
