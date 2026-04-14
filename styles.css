@@ -1712,13 +1712,15 @@ hr.divider {
     height: 100%;
     object-fit: cover;
   }
-  /* Exhaust image — anchor to the left edge */
+  /* Exhaust image — zoom in anchored to the left edge */
   .craft-panel-1 .craft-panel-img {
     object-position: 0% center;
-    transform: none;
+    transform: scale(1.3);
+    transform-origin: left center;
   }
   .craft-panel-content { padding: 0 6% 0 8%; order: unset; }
-  .craft-panel-2 .craft-panel-visual { order: 2; }
+  .craft-panel-2 .craft-panel-visual { order: 2; height: 100svh; min-height: unset; }
+  .craft-panel-2 .craft-panel-img { transform: none; }
   .craft-panel-2 .craft-panel-content { order: 1; padding: 0 8% 0 6%; }
   .craft-panel-title { font-size: clamp(1.7rem, 3.2vw, 2.6rem); }
   .craft-panel-desc { font-size: 0.82rem; line-height: 1.65; }
