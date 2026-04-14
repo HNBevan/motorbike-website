@@ -1662,21 +1662,76 @@ hr.divider {
 ══════════════════════════════════════════ */
 @media (min-width: 630px) and (max-width: 680px) and (orientation: portrait) {
 
-  /* Hero — stacked, bike sized for portrait */
-  .hero-bike-side { height: 46svh; min-height: 0 !important; margin-top: -40px; }
+  /* Hero — side-by-side, same as landscape */
+  .hero-inner {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    padding: 80px 28px 24px;
+    align-items: center;
+    justify-items: start;
+  }
+  .hero-content {
+    grid-row: 1;
+    grid-column: 1;
+    text-align: left;
+    padding-right: 20px;
+    padding-left: 0;
+  }
+  .hero-eyebrow { justify-content: flex-start; font-size: 0.56rem; }
+  .hero-headline { font-size: clamp(1.5rem, 4vw, 2.6rem); margin-bottom: 16px; }
+  .hero-sub { max-width: 100%; margin: 0; margin-bottom: 20px; font-size: 0.8rem; line-height: 1.6; }
+  .hero-cta { padding: 12px 28px; font-size: 0.68rem; }
+  .hero-bike-side {
+    grid-row: 1;
+    grid-column: 2;
+    height: 46svh;
+    min-height: 0 !important;
+    margin-top: 0;
+    width: 100%;
+  }
+  #hero-canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; left: 0 !important; }
 
-  /* Craft panels — stacked, images fill their space */
-  .craft-panel-visual { height: 55vw; min-height: unset; }
-  .craft-panel-2 .craft-panel-visual { height: 55vw !important; min-height: 0 !important; }
-  .craft-panel-2 .craft-panel-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: none; }
-  /* Vignette — lighten so images show through */
+  /* Craft panels — 2-column full height */
+  .craft-panel {
+    grid-template-columns: 1fr 1fr;
+    height: 100svh;
+  }
+  .craft-panel-visual {
+    height: 100svh;
+    order: unset;
+    min-height: unset;
+    align-self: stretch;
+  }
   .craft-panel-visual::after { box-shadow: inset 0 0 60px 20px rgba(10,10,14,0.75); }
-
-  /* Exhaust image */
+  .craft-panel-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .craft-panel-1 .craft-panel-img { object-position: 85% center; transform: scale(1.2); transform-origin: center center; }
+  .craft-panel-content { padding: 0 6% 0 8%; order: unset; }
+  .craft-panel-2 .craft-panel-visual { order: 2; height: 100svh !important; min-height: 0 !important; }
+  .craft-panel-2 .craft-panel-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: none; }
+  .craft-panel-2 .craft-panel-content { order: 1; padding: 0 8% 0 6%; }
+  .craft-panel-title { font-size: clamp(1.7rem, 3.2vw, 2.6rem); }
+  .craft-panel-desc { font-size: 0.82rem; line-height: 1.65; }
 
   /* Models — 2 columns */
   .models-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .models-grid .model-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+  /* Features — 2 columns */
+  .features-inner { grid-template-columns: 1fr 1fr; }
+  .features-inner .feature-item:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .feature-item { padding: 40px 28px; }
+
+  /* Intro stats */
+  .intro-inner { flex-wrap: nowrap; }
+  .intro-divider { display: block; }
+  .intro-stat { flex: 1; }
+  .intro-stat .stat-num { font-size: 2.2rem; }
+
+  /* Story */
+  .story-layout { grid-template-columns: 1fr 1.2fr; gap: 40px; }
+
+  /* Contact */
+  .contact-layout { grid-template-columns: 1fr 1fr; gap: 40px; }
 
   /* Section padding */
   .section-wrapper { padding: 0 24px; }
