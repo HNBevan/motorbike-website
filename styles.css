@@ -1659,7 +1659,7 @@ hr.divider {
 /* ══════════════════════════════════════════
    Z FOLD OPEN — landscape inner display ~728×656 px
 ══════════════════════════════════════════ */
-@media (min-width: 700px) and (max-width: 760px) and (orientation: landscape) and (pointer: coarse) {
+@media (min-width: 700px) and (max-width: 760px) and (orientation: landscape) {
 
   /* Hero — side-by-side (text left, bike right) */
   .hero-inner {
@@ -1712,11 +1712,11 @@ hr.divider {
     height: 100%;
     object-fit: cover;
   }
-  /* Exhaust image — exhaust subject is right side of source; anchor right so it fills from the left edge */
+  /* Exhaust image — keep subject centred and visible */
   .craft-panel-1 .craft-panel-img {
-    object-position: 100% center;
+    object-position: 85% center;
     transform: scale(1.2);
-    transform-origin: right center;
+    transform-origin: center center;
   }
   .craft-panel-content { padding: 0 6% 0 8%; order: unset; }
   .craft-panel-2 .craft-panel-visual { order: 2; height: 100svh !important; min-height: 0 !important; }
