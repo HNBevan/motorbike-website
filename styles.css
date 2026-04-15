@@ -1619,7 +1619,7 @@ hr.divider {
   .contact-layout { grid-template-columns: 1fr 1fr; gap: 48px; }
 }
 
-/* iPhone landscape / very short landscape phones (e.g. 844x390) */
+/* iPhone landscape / very short landscape phones (e.g. 844x390, iPhone SE 667x375) */
 @media (orientation: landscape) and (max-height: 430px) {
   /* Inherits 1fr 2fr grid from the max-height:600px rule above — just tighten spacing */
   .hero-inner { padding: 52px 20px 16px; }
@@ -1628,6 +1628,8 @@ hr.divider {
   .hero-sub { font-size: 0.72rem; margin-bottom: 12px; line-height: 1.35; }
   .hero-cta { padding: 9px 20px; font-size: 0.68rem; }
   .hero-scroll-hint { display: none; }
+  /* Push bike down so it clears the navbar and sits in the lower half */
+  .hero-bike-side { margin-top: 28px; }
 }
 
 /* ══════════════════════════════════════════
@@ -1810,13 +1812,13 @@ hr.divider {
    Z FOLD OPEN — landscape inner display
    Z Fold 6: ~763×656px  |  Z Fold 7: ~748×673px (CSS px)
 ══════════════════════════════════════════ */
-@media (min-width: 700px) and (max-width: 780px) and (orientation: landscape) {
+@media (min-width: 700px) and (max-width: 780px) and (orientation: landscape) and (min-height: 500px) {
 
-  /* Hero — side-by-side (text left, bike right) */
+  /* Hero — 1fr text + 2fr bike (same as tablet treatment) */
   .hero-inner {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr;
-    padding: 80px 28px 24px;
+    padding: 72px 24px 24px;
     align-items: center;
     justify-items: start;
   }
@@ -1824,17 +1826,17 @@ hr.divider {
     grid-row: 1;
     grid-column: 1;
     text-align: left;
-    padding-right: 20px;
-    padding-left: 0;
+    padding-right: 16px;
+    padding-left: 20px;
   }
-  .hero-eyebrow { justify-content: flex-start; font-size: 0.56rem; }
-  .hero-headline { font-size: clamp(1.5rem, 4vw, 2.6rem); margin-bottom: 16px; }
-  .hero-sub { max-width: 100%; margin: 0; margin-bottom: 20px; font-size: 0.8rem; line-height: 1.6; }
-  .hero-cta { padding: 12px 28px; font-size: 0.68rem; }
+  .hero-eyebrow { justify-content: flex-start; font-size: 0.54rem; }
+  .hero-headline { font-size: clamp(1.4rem, 3.8vw, 2.4rem); margin-bottom: 14px; }
+  .hero-sub { max-width: 100%; margin: 0; margin-bottom: 18px; font-size: 0.78rem; line-height: 1.55; }
+  .hero-cta { padding: 11px 24px; font-size: 0.66rem; }
   .hero-bike-side {
     grid-row: 1;
     grid-column: 2;
-    height: 46svh;
+    height: 62svh;      /* at 673px → 417px tall; col ~461px wide → aspect 1.11 */
     min-height: 0 !important;
     margin-top: 0;
     width: 100%;
@@ -1846,10 +1848,10 @@ hr.divider {
     grid-template-columns: 1fr 1fr;
     height: 100svh;
   }
+  /* Use min-height + align-self:stretch so the visual always matches the panel height */
   .craft-panel-visual {
-    height: 100svh;
+    min-height: 100svh;
     order: unset;
-    min-height: unset;
     align-self: stretch;
   }
   /* Lighten the vignette — at ~364px wide the default shadow swallows the image */
@@ -1870,13 +1872,19 @@ hr.divider {
     transform-origin: center center;
   }
   .craft-panel-content { padding: 0 6% 0 8%; order: unset; }
-  .craft-panel-2 .craft-panel-visual { order: 2; height: 100svh !important; min-height: 0 !important; }
+
+  /* Panel 2: explicit two-class rule to beat the 1024px specificity */
+  .craft-panel-2 .craft-panel-visual {
+    order: 2;
+    min-height: 100svh;
+    align-self: stretch;
+  }
   .craft-panel-2 .craft-panel-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: none; }
   .craft-panel-2 .craft-panel-content { order: 1; padding: 0 8% 0 6%; }
-  .craft-panel-title { font-size: clamp(1.7rem, 3.2vw, 2.6rem); }
+  .craft-panel-title { font-size: clamp(1.6rem, 3vw, 2.4rem); }
   .craft-panel-desc { font-size: 0.82rem; line-height: 1.65; }
 
-  /* Models — 2 columns (3 is too tight at 728px) */
+  /* Models — 2 columns */
   .models-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
   .models-grid .model-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
 
@@ -1907,5 +1915,5 @@ hr.divider {
    iPad Mini 6th gen: ~1133×744 CSS px in landscape
 ══════════════════════════════════════════ */
 @media (min-width: 1100px) and (max-width: 1160px) and (orientation: landscape) and (pointer: coarse) {
-  .hero-bike-side { margin-top: 48px; }
+  .hero-bike-side { margin-top: 90px; }
 }
