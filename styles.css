@@ -1428,6 +1428,9 @@ hr.divider {
   .hero-headline { font-size: clamp(2.8rem, 10vw, 5rem); }
   .hero-bike-side { height: 38vh; min-height: 220px; margin-top: -70px; }
 
+  /* Reduce hero min-height on small phones to avoid forcing large scroll */
+  #hero { min-height: min(700px, 100svh); }
+
   /* Craft panels */
   .craft-panel-visual { height: 55vw; }
   .craft-panel-title { font-size: clamp(2rem, 7vw, 3.2rem); }
@@ -1441,6 +1444,7 @@ hr.divider {
   .contact-layout { grid-template-columns: 1fr; gap: 48px; }
   .footer-top { flex-direction: column; gap: 40px; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .footer-legal { flex-wrap: wrap; justify-content: center; gap: 16px; }
   .hero-scroll-hint { left: 50%; transform: translateX(-50%); }
 }
 
@@ -1472,20 +1476,28 @@ hr.divider {
   .intro-stat { flex: 0 0 100%; }
   .intro-divider { display: none; }
 
+  /* Story — pull accent image fully inside to avoid horizontal scroll */
+  .story-img-accent { right: 0; bottom: -12px; width: 50%; }
+
   /* Footer */
   .footer-cols { flex-direction: column; gap: 32px; }
 }
 
 /* ══════════════════════════════════════════
    Z FOLD COVER SCREEN — very narrow portrait (up to 380px)
+   Covers Z Fold 7 cover screen (~344px CSS px wide)
 ══════════════════════════════════════════ */
 @media (max-width: 380px) {
   .section-wrapper { padding: 0 16px; }
   #navbar, #navbar.scrolled { padding-left: 16px; padding-right: 16px; }
-  .hero-inner { padding: 0 16px; padding-bottom: 100px; }
+
+  /* Fix: was padding: 0 16px (0 top) — content appeared behind fixed navbar */
+  .hero-inner { padding: 88px 16px 100px; }
   .hero-headline { font-size: clamp(2rem, 12vw, 3rem); }
   .hero-eyebrow { font-size: 0.55rem; letter-spacing: 0.28em; }
   .hero-sub { font-size: 0.82rem; }
+  .hero-bike-side { height: 32vh; min-height: 190px; margin-top: -60px; }
+
   .craft-panel-title { font-size: clamp(1.6rem, 9vw, 2.2rem); }
   .craft-panel-content { padding: 36px 5%; }
   .craft-panel-desc { font-size: 0.84rem; }
@@ -1495,6 +1507,9 @@ hr.divider {
   .feature-item { padding: 44px 28px; }
   .contact-layout { gap: 36px; }
   .footer-top { gap: 32px; }
+
+  /* Keep story accent image within the container on ultra-narrow screens */
+  .story-img-accent { right: 0; bottom: -8px; width: 48%; }
 }
 
 /* ══════════════════════════════════════════
@@ -1506,10 +1521,10 @@ hr.divider {
   /* Navbar */
   #navbar, #navbar.scrolled { padding-top: 14px; padding-bottom: 14px; }
 
-  /* Hero — restore side-by-side layout */
+  /* Hero — 1fr text + 2fr bike (matches tablet landscape treatment) */
   #hero { min-height: 100svh; }
   .hero-inner {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr;
     padding: 72px 24px 32px;
     align-items: center;
@@ -1517,8 +1532,8 @@ hr.divider {
   }
   .hero-content {
     text-align: left;
-    padding-right: 24px;
-    padding-left: 0;
+    padding-right: 16px;
+    padding-left: 36px;
     grid-row: 1;
     grid-column: 1;
   }
@@ -1530,20 +1545,57 @@ hr.divider {
     width: 100%;
   }
   #hero-canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; left: 0 !important; }
-  .hero-headline { font-size: clamp(1.6rem, 4.5vw, 2.8rem); }
+  /* Tighter headline for the narrower 1fr text column */
+  .hero-headline { font-size: clamp(1.4rem, 4vw, 2.4rem); }
   .hero-eyebrow { justify-content: flex-start; }
-  .hero-sub { max-width: 100%; margin: 0; margin-bottom: 28px; font-size: 0.82rem; }
+  .hero-sub { max-width: 100%; margin: 0; margin-bottom: 24px; font-size: 0.8rem; line-height: 1.5; }
   .hero-scroll-hint { bottom: 10px; }
 
-  /* Craft panels — 2-column, auto height */
+  /* Craft panels — 2-column, full height */
   .craft-panel {
     grid-template-columns: 1fr 1fr;
     height: auto;
     min-height: 100svh;
   }
-  .craft-panel-visual { height: 100svh; order: unset; min-height: unset; }
-  .craft-panel-content { padding: 80px 6%; order: unset; }
-  .craft-panel-2 .craft-panel-visual { order: 2; }
+  /* No explicit height — let align-self:stretch fill the row.
+     If text content is taller than the viewport the image matches it.
+     min-height ensures the image is never shorter than the viewport. */
+  .craft-panel-visual {
+    min-height: 100svh;
+    order: unset;
+    align-self: stretch;
+  }
+  /* Reduce the heavy vignette so the image is visible in narrow phone columns */
+  .craft-panel-visual::after { box-shadow: inset 0 0 40px 8px rgba(10,10,14,0.65); }
+  /* Tighten content so the column fits within the viewport height —
+     that keeps the panel at 100svh and the image fills it completely */
+  .craft-panel-content { padding: 32px 6%; order: unset; }
+  .craft-panel-inner .section-label { margin-bottom: 10px; }
+  .craft-panel-title { font-size: clamp(1.5rem, 4.2vw, 2.2rem); margin-bottom: 14px; }
+  .craft-panel-desc { font-size: 0.8rem; line-height: 1.6; margin-bottom: 20px; }
+  .craft-panel-inner .hero-cta { padding: 11px 24px; font-size: 0.68rem; }
+
+  /* Panel 1: restore desktop image positioning (1024px rule shifts it off-centre) */
+  .craft-panel-1 .craft-panel-img {
+    object-position: 85% center;
+    transform: scale(1.2);
+    transform-origin: center center;
+  }
+
+  /* Panel 2: must match the two-class specificity of the 1024px rule
+     (.craft-panel-2 .craft-panel-visual { height:65vw }) to win the cascade */
+  .craft-panel-2 .craft-panel-visual {
+    order: 2;
+    min-height: 100svh;   /* same specificity as 1024px rule — wins because it comes later */
+    height: auto;         /* let stretch handle it instead of a fixed value */
+    align-self: stretch;
+  }
+  .craft-panel-2 .craft-panel-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transform: none;   /* clear the translateY(-8%) left by the 1024px rule */
+  }
   .craft-panel-2 .craft-panel-content { order: 1; }
 
   /* Models */
@@ -1569,13 +1621,12 @@ hr.divider {
 
 /* iPhone landscape / very short landscape phones (e.g. 844x390) */
 @media (orientation: landscape) and (max-height: 430px) {
-  .hero-inner {
-    padding: 52px 20px 16px;
-  }
-  .hero-headline { font-size: clamp(1.2rem, 3.5vw, 2rem); margin-top: 0; padding-left: 28px; }
-  .hero-eyebrow { font-size: 0.52rem; letter-spacing: 0.22em; margin-bottom: 8px; margin-top: 40px; padding-left: 28px; }
-  .hero-sub { font-size: 0.75rem; margin-bottom: 14px; line-height: 1.4; padding-left: 28px; }
-  .hero-cta { padding: 10px 22px; font-size: 0.78rem; margin-left: 28px; }
+  /* Inherits 1fr 2fr grid from the max-height:600px rule above — just tighten spacing */
+  .hero-inner { padding: 52px 20px 16px; }
+  .hero-headline { font-size: clamp(1.1rem, 3.2vw, 1.8rem); margin-top: 0; }
+  .hero-eyebrow { font-size: 0.5rem; letter-spacing: 0.2em; margin-bottom: 6px; margin-top: 36px; }
+  .hero-sub { font-size: 0.72rem; margin-bottom: 12px; line-height: 1.35; }
+  .hero-cta { padding: 9px 20px; font-size: 0.68rem; }
   .hero-scroll-hint { display: none; }
 }
 
@@ -1584,20 +1635,44 @@ hr.divider {
    pointer: coarse = touch screen, excludes laptops/desktops with mice
 ══════════════════════════════════════════ */
 @media (orientation: landscape) and (pointer: coarse) and (min-height: 600px) {
-  /* Hero — keep stacked layout, just resize the bike */
+  /* Hero — 1fr text + 2fr bike so the canvas has more horizontal room.
+     Fixes: iPad Mini "can't see bike" and iPad Pro "bike too big".
+     With 2fr bike column the canvas aspect stays ≥ 1.0 on all iPads. */
+  .hero-inner {
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: start;
+  }
+  .hero-content {
+    grid-row: 1;
+    grid-column: 1;
+    text-align: left;
+    padding-right: 24px;
+    padding-left: 0;
+  }
+  .hero-eyebrow { justify-content: flex-start; }
+  /* Smaller headline so it fits in the narrower 1fr text column */
+  .hero-headline { font-size: clamp(2.2rem, 3.5vw, 3.4rem); }
+  .hero-sub { max-width: 100%; font-size: 0.85rem; margin: 0 0 28px; }
   .hero-bike-side {
-    height: 85vh;
+    grid-row: 1;
+    grid-column: 2;
+    height: 72vh;        /* ≈ wide-ish canvas aspect on all iPads */
     min-height: 0 !important;
-    margin-top: -20px;
+    margin-top: 0;
+    width: 100%;
   }
   #hero-canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; left: 0 !important; }
 
-  /* Craft panels — full height 2-column */
+  /* Craft panels — full height 2-column, lighter vignette for narrower columns */
   .craft-panel {
     grid-template-columns: 1fr 1fr;
     height: 100svh;
   }
-  .craft-panel-visual { height: 100svh; order: unset; min-height: unset; }
+  .craft-panel-visual { height: 100svh; order: unset; min-height: unset; align-self: stretch; }
+  /* Lighten the heavy vignette so the image fills the column visually */
+  .craft-panel-visual::after { box-shadow: inset 0 0 80px 30px rgba(10,10,14,0.85); }
   .craft-panel-content { padding: 0 9% 0 11%; order: unset; }
   .craft-panel-2 .craft-panel-visual { order: 2; height: 100svh !important; min-height: 0 !important; }
   .craft-panel-2 .craft-panel-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: none; }
@@ -1621,14 +1696,6 @@ hr.divider {
   .intro-inner { flex-wrap: nowrap; }
   .intro-divider { display: block; }
   .intro-stat { flex: 1; }
-}
-
-/* Shorter landscape tablets (e.g. 1024x600) */
-@media (orientation: landscape) and (pointer: coarse) and (min-height: 600px) and (max-height: 680px) {
-  .hero-bike-side {
-    height: 46svh;
-    min-height: 0 !important;
-  }
 }
 
 /* Nest Hub (1024x600) — text on left, bike on right */
@@ -1658,9 +1725,10 @@ hr.divider {
 }
 
 /* ══════════════════════════════════════════
-   Z FOLD OPEN — portrait inner display ~656×728 px
+   Z FOLD OPEN — portrait inner display
+   Z Fold 6: ~656×763px  |  Z Fold 7: ~673×748px (CSS px)
 ══════════════════════════════════════════ */
-@media (min-width: 630px) and (max-width: 680px) and (min-height: 700px) {
+@media (min-width: 630px) and (max-width: 700px) and (min-height: 700px) {
 
   /* Hero — side-by-side, same as landscape */
   .hero-inner {
@@ -1739,9 +1807,10 @@ hr.divider {
 }
 
 /* ══════════════════════════════════════════
-   Z FOLD OPEN — landscape inner display ~728×656 px
+   Z FOLD OPEN — landscape inner display
+   Z Fold 6: ~763×656px  |  Z Fold 7: ~748×673px (CSS px)
 ══════════════════════════════════════════ */
-@media (min-width: 700px) and (max-width: 760px) and (orientation: landscape) {
+@media (min-width: 700px) and (max-width: 780px) and (orientation: landscape) {
 
   /* Hero — side-by-side (text left, bike right) */
   .hero-inner {
@@ -1831,4 +1900,12 @@ hr.divider {
   /* Section wrappers */
   .section-wrapper { padding: 0 24px; }
   #navbar, #navbar.scrolled { padding-left: 24px; padding-right: 24px; }
+}
+
+/* ══════════════════════════════════════════
+   iPAD MINI LANDSCAPE — nudge hero bike down
+   iPad Mini 6th gen: ~1133×744 CSS px in landscape
+══════════════════════════════════════════ */
+@media (min-width: 1100px) and (max-width: 1160px) and (orientation: landscape) and (pointer: coarse) {
+  .hero-bike-side { margin-top: 48px; }
 }

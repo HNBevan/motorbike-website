@@ -59,6 +59,7 @@ window.addEventListener('scroll', () => {
       pivot.add(plane);
 
       startAnimation();
+      applyScale(); // set initial scale based on current canvas dimensions
     },
     undefined,
     function() {
@@ -73,11 +74,25 @@ window.addEventListener('scroll', () => {
     mouse.y = (e.clientY / window.innerHeight - 0.5) * 2;
   }, { passive: true });
 
+  // Scale the pivot so the bike appears consistently sized regardless of canvas aspect.
+  // Reference: desktop sidebar canvas is roughly 0.85:1 (taller than wide).
+  // Narrower/portrait canvases (e.g. iPad Pro landscape before the column fix) → scale down.
+  // Wider canvases (phones, landscape layouts) → keep at 1.0 (no zooming in).
+  function applyScale() {
+    if (!canvas.offsetWidth || !canvas.offsetHeight) return;
+    const aspect = canvas.offsetWidth / canvas.offsetHeight;
+    const ref = 0.85;
+    const s = aspect >= ref ? 1.0 : Math.max(0.55, aspect / ref);
+    pivot.scale.setScalar(s);
+  }
+
   window.addEventListener('resize', function() {
     const w = canvas.offsetWidth, h = canvas.offsetHeight;
+    if (!w || !h) return;
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     renderer.setSize(w, h);
+    applyScale();
   });
 
   var time = 0;
