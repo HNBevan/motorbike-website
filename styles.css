@@ -1917,3 +1917,28 @@ hr.divider {
 @media (min-width: 1100px) and (max-width: 1160px) and (orientation: landscape) and (pointer: coarse) {
   .hero-bike-side { margin-top: 90px; }
 }
+
+/* ============================================
+   LARGE DESKTOP — screens wider than 15.6 inch
+   (1920px+ viewport, e.g. 24", 27", 32" monitors)
+============================================ */
+@media (min-width: 1920px) {
+  /* Remove the 1440px cap so the hero grid fills the full screen width,
+     giving the bike canvas a much larger area to render into */
+  .hero-inner {
+    max-width: none;
+    padding: 0 120px;
+  }
+
+  /* Slight leftward shift for the h1 / hero text */
+  .hero-content {
+    padding-left: 16px;
+  }
+
+  /* Keep canvas overflow modest so it doesn't bleed past the viewport edge
+     now that the bike column is much wider */
+  #hero-canvas {
+    left: -3%;
+    width: 106%;
+  }
+}
